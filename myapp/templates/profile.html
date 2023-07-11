@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!--    <div class="main">-->
+<!--        <h2>Profile</h2>-->
+<!--<div>-->
+<!--  <p>-->
+<!--      Username: {{ request.user.username }} <br>-->
+<!--      Date Joined: {{ request.user.date_joined }} <br>-->
+<!--      Email: {{ request.user.email }}<br>-->
+<!--      Last Login: {{ request.user.last_login }}<br>-->
+<!--    </p>-->
+<!--     <h2>Favorite Animes</h2>-->
+<!--    <ul>-->
+<!--        {% for anime in favorites %}-->
+<!--            <li>{{ anime.title }}</li>-->
+<!--        {% empty %}-->
+<!--            <li>No favorite animes found.</li>-->
+<!--        {% endfor %}-->
+<!--    </ul>-->
+<!--</div>-->
+
+
+<!--    </div>-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="topic">{{ request.user.username }}</h2>
+            <h6 class="sub">Date Joined:</h6><h6>{{ request.user.date_joined }}</h6><br>
+            <h6 class="sub">Email:</h6><h6>{{ request.user.email }}</h6><br>
+            <h6 class="sub">Last Login:</h6><h6>{{ request.user.last_login }}</h6><br>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="topic">Favorite Animes</h3>
+            <div class="list_view">
+                {% for anime in favorites_anime %}
+                    <div class="col-sm-2">
+                         <img  src="{{ anime.img_url }}" alt="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930">
+                         <h6><a href="/anime/{{ anime.id }}">{{ anime.title}}</a></h6>
+                    </div>
+                {% empty %}
+                    <h6 colspan="6">No results found.</h6>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="topic">Favorite Mangas</h3>
+            <div class="list_view">
+                {% for manga in favorites_manga %}
+                    <div class="col-sm-2">
+                        <img  src="{{ manga.imgPath }}" alt="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930">
+                        <h6><a href="/manga/{{ manga.id }}">{{ manga.title}}</a></h6>
+                    </div>
+                {% empty %}
+                    <h6 colspan="6">No results found.</h6>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</div>
+<style>
+       .topic{
+            display: block;
+            background-color: lightgray;
+            padding-left: 5%;
+            font-family: 'Raleway', sans-serif;
+            font-style: italic;
+        }
+       h2, img{
+             padding: 1%;
+       }
+       h6{
+           display: inline;
+
+       }
+       .sub{
+             color: grey;
+       }
+         .list_view {
+              display: flex;
+              flex-wrap: wrap;
+         }
+        img{
+            padding: 3%;
+            width: 132px;
+            height: 200px;
+        }
+        a{
+            color:black;
+            text-decoration: none;
+        }
+
+</style>
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h2>{{ discussion.title }}</h2>
+<p>Tags: {{ discussion.tags }}</p>
+<p>Date Created: {{ discussion.date_created }}</p>
+<hr>
+{% for comment in discussion.comment_set.all %}
+  <p>{{ comment.comment }}</p>
+  <p>By: {{ comment.user }}</p>
+  <p>Date: {{ comment.date }}</p>
+  {% if request.user == comment.user or request.user.is_superuser %}
+    <div id="btn-review">
+      <form action="{% url 'delete_comment' comment.id %}" method="POST">
+        {% csrf_token %}
+        <button class="btn btn-danger" type="submit">Delete</button>
+      </form>
+    </div>
+  {% endif%}
+  <hr>
+{% endfor %}
+
+<h3>Add Comment</h3>
+<form method="post" action="{% url 'add_comment' discussion.id %}">
+  {% csrf_token %}
+  <textarea name="comment" placeholder="Your comment" required></textarea>
+  <button type="submit">Add Comment</button>
+</form>
+
+
+{% endblock %}

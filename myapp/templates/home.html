@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <style>
+        .main{
+            margin-left: 8%;
+            margin-right: 8%;
+        }
+        .topic{
+            display: block;
+            background-color: lightgray;
+            padding-left: 5%;
+            font-family: 'Raleway', sans-serif;
+            font-style: italic;
+        }
+        .list_view{
+            vertical-align: top;
+            display: flex;
+            text-align: center;
+            width: 300px;
+              justify-content: space-between;
+
+
+        }
+        .inside{
+            display: block;
+            padding: 3%;
+
+        }
+        img{
+            padding: 3%;
+            width: 132px;
+            height: 200px;
+        }
+        h8{
+             max-width: 100%;
+  text-overflow: clip;
+  white-space: nowrap;
+        }
+
+    </style>
+    <div class="main">
+        <h5 class="topic">POPULAR ANIMES</h5>
+    <div class="list_view">
+        {% for anime in animes %}
+            <div class="inside">
+                 <img  src="{{ anime.img_url }}" alt="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930">
+                 <h7><a href="/anime/{{ anime.id }}">{{ anime.title}}</a></h7>
+            </div>
+        {% endfor %}
+      </div>
+
+    <h5 class="topic">HIGH RATED MANGAS</h5>
+    <div class="list_view">
+        {% for manga in mangas %}
+            <div class="inside">
+                <img src="{{ manga.imgPath }}" alt="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930">
+                <h7><a href="/manga/{{ manga.id }}">{{ manga.title}}</a></h7>
+            </div>
+        {% endfor %}
+    </div>
+    <h5 class="topic">NEW ANIMES</h5>
+    <div class="list_view">
+        {% for anime in new_animes %}
+              <div class="inside">
+                    <img src="{{ anime.img_url }}" alt="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930">
+                    <h7><a href="/anime/{{ anime.id }}">{{ anime.title}}</a></h7>
+              </div>
+        {% endfor %}
+    </div>
+    <h5 class="topic">Popular comedy mangas</h5>
+    <div class="list_view">
+        {% for manga in comedy_mangas %}
+            <div class="inside">
+                <img src="{{ manga.imgPath }}" alt="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930">
+                <h7><a href="/manga/{{ manga.id }}">{{ manga.title}}</a></h7>
+            </div>
+        {% endfor %}
+    </div>
+    </div>
+
+{% endblock %}
+

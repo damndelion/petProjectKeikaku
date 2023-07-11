@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% for discussion in discussions %}
+  <h2>{{ discussion.title }}</h2>
+  <p>Tags: {{ discussion.tags }}</p>
+  <p>Date Created: {{ discussion.date_created }}</p>
+  <a href="{% url 'discussion' discussion.id %}">View Discussion</a>
+  <hr>
+{% endfor %}
+
+
+{% endblock %}

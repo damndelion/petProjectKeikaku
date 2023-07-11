@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+    <div class="container">
+            <div class="row">
+                  <div class="col-12">
+                        <h2>{{ manga.title}}</h2>
+                  </div>
+             </div>
+            <div class="row">
+                  <div class="col-lg-4">
+                        <img src="{{ manga.imgPath }}" alt="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930" class="img-fluid">
+                  </div>
+                  <div class="col-lg-8">
+                        <div class="row">
+                              <div class="col-6">
+                                     <h5 class="topic">Manga Information</h5>
+                                    <h6 class="sub">Genres:</h6><h6>{{ manga.genre }}</h6><br>
+                                    <h6 class="sub">Alternative titles:</h6><h6>{{ manga.alternativeTitle }}</h6><br>
+                                    <h6><h6 class="sub">Producer: </h6>{{ manga.staff }}</h6><br>
+
+                              </div>
+                             <div class="col-6">
+                                    <h5 class="topic">Manga Rating</h5>
+                                    <h6 class="sub">Score: </h6><h6>{{ manga.rating }}</h6><br>
+                              </div>
+                        </div>
+                  </div>
+            </div>
+                <h5 class="topic">Reviews</h5>
+            <div class="row">
+                {% if not reviews %}
+                        <h5 class="col-3">No Reviews</h5>
+                {% endif %}
+                {% for review in reviews %}
+                  <div class="col-12" id="reviews">
+                        <h5>{{ review.user }}   </h5>
+                        {% if review.rating > 6 %}
+                        <h6>{{ review.rating }}/10 😃</h6>
+                        {% elif review.rating > 3 and review.rating < 8 %}
+                        <h6>{{ review.rating }}/10 😐</h6>
+                        {% else %}
+                        <h6>{{ review.rating }}/10 😢</h6>
+                        {% endif %}
+                        <h6>{{ review.timestamp }}</h6> <br>
+                        <h6>{{ review.content }}</h6> <br>
+                        {% if request.user == review.user or request.user.is_superuser %}
+                            <div id="btn-review">
+                                   <form action="{% url 'review_delete_manga' review.id %}" method="POST">
+                                        {% csrf_token %}
+                                        <button class="btn btn-danger" type="submit">Delete</button>
+                                    </form>
+                            </div>
+                        {% endif%}
+                        <hr>
+                      </div>
+                {% endfor %}
+            </div>
+            <div class="row">
+                 <form method="post">
+                    {% csrf_token %}
+                    {{ form|crispy}}
+                    <button type="submit" class="btn btn-primary">Submit Review</button>
+                </form>
+            </div>
+    </div>
+     <style>
+
+       .topic{
+            display: block;
+            background-color: lightgray;
+            padding-left: 5%;
+            font-family: 'Raleway', sans-serif;
+            font-style: italic;
+        }
+       h2, img{
+             padding: 1%;
+       }
+       h6{
+             display: inline;
+       }
+       .sub{
+             color: grey;
+       }
+       #reviews{
+           margin: 1%;
+       }
+       #btn-review{
+            display: flex;
+            justify-content: right;
+      }
+      .btn{
+            margin: 3px;
+      }
+    </style>
+{% endblock %}
